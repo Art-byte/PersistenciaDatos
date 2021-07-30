@@ -32,15 +32,26 @@ public class TestEmpleados {
         List<Empleado> empleados = (List<Empleado>)manager.createQuery("from Empleado").getResultList();
         System.out.println("En la base de datos hay: " + empleados.size() + " empleados");*/
 
-        Empleado e = new Empleado(10L, "Arturo", "Pedraza",
-                new GregorianCalendar(1995, 4, 17).getTime());
+        insertInicial();
 
         manager.getTransaction().begin();
-        manager.persist(e);
+        Empleado e = manager.find(Empleado.class, 10L);
+        e.setNombre("Karla");
+        e.setApellido("Martinez");
         manager.getTransaction().commit();
 
         imprimirTodo();
 
+    }
+
+
+
+    public static void insertInicial(){
+        Empleado e = new Empleado(10L, "Arturo", "Pedraza",
+                new GregorianCalendar(1995, 4, 17).getTime());
+        manager.getTransaction().begin();
+        manager.persist(e);
+        manager.getTransaction().commit();
     }
 
     @SuppressWarnings("unchecked")
